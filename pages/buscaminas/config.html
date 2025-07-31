@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmos Games</title>
+    <link rel="stylesheet" href="../../css/main-styles.css">
+    <link rel="stylesheet" href="../../css/buscaminas-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Algoritmos y Estructuras de Datos</h1>
+        <h2>BUSCAMINAS</h2>
+        <a href="./tablero.html"><strong>Regresar</strong></a>
+    </header>
+
+    <section class="main-page">
+        <div class="card">
+            <div class="input-row"><h3>Columnas</h3> <input id="columnas" type="number" min="8" max="24" step="1"></div>
+            <div class="input-row"><h3>Filas</h3> <input id="filas" type="number" min="8" max="24" step="1"></div>
+            <div class="input-row"><h3>Minas</h3> <input id="minas" type="number" step="1"></div>
+
+            <div class="input-row">
+                <button id="guardar">Guardar</button>
+                <button id="cancelar">Cancelar</button>
+            </div>
+
+            <div class="alerta">
+                <div class="img-box">
+                    <img src="../../img/buscaminas/warning_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.png" alt="">
+                </div>
+                <div class="text-cont">
+                    <h3>Alerta</h3>
+                    <p>Las minas deben mantener una relación de 10% al 30% a las celdas del tablero</p>
+                </div>
+
+                <div class="img-box">
+                    <img src="../../img/buscaminas/close_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="">
+                </div>
+            </div>
+        </div>
+    </section> 
+    <script src="../../js/buscaminas/config.js"></script>
+</body>
+</html>

@@ -37,8 +37,7 @@ header a:hover{
 }
 
 .game-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    display: flex;
     gap: 30px;
     padding: 30px;
     justify-content: center;

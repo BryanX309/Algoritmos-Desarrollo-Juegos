@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algoritmos Games</title>
     <link rel="stylesheet" href="../../css/main-styles.css">
+    <link rel="stylesheet" href="../../css/buscaminas-styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=settings" />
 </head>
 <body>
     <header>
@@ -14,9 +16,28 @@
     </header>
 
     <section class="main-page">
-        <div class="game-grid">
-            
+        <div class="card">
+            <h2>Cuidado donde pisas</h2>
+            <div class="game-header">
+                <div>
+                    <span class="material-symbols-outlined config" id="config" title="Configuration">
+                        settings
+                    </span>
+                </div>
+
+                <div class="flex">
+                    <img src="https://www.google.com/logos/fnbx/minesweeper/flag_icon.png" alt="">
+                    <h2 id="nMinas"></h2>
+                </div>
+
+                <div class="flex">
+                    <img src="https://www.google.com/logos/fnbx/minesweeper/clock_icon.png" alt="">
+                    <h2>0:00</h2>
+                </div>
+            </div>
+            <div class="tablero"></div>
         </div>
     </section> 
+    <script src="../../js/buscaminas/load.js"></script>
 </body>
 </html>

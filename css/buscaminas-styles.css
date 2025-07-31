@@ -1,0 +1,229 @@
+.card{
+    display: grid;
+    padding: 30px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255, 0.2);
+    border-radius: 15px;
+    min-width: 40%;
+}
+
+.config{
+    size: 50px;
+    font-style: normal;
+    color: white;
+    cursor: pointer;
+    width: 50px;
+}
+
+.config:hover{
+    color: rgb(90, 200, 80);
+}
+
+
+.game-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-height: 50px;
+}
+
+.game-header img{
+    height: 30px;
+    width: 30px;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+}
+
+/*Clases tablero*/
+
+
+.tablero{
+    display: block;
+    min-width: 250px;
+    max-width: 750px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255, 0.2);
+    border-radius: 5px;
+}
+
+.tablero .celda{
+    display: flex;
+    width: 50px;
+    aspect-ratio: 1 / 1;
+    margin: 2px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.tablero .celda .valor{
+    margin: 0;
+}
+
+.tablero .celda:hover{
+    border: 1px solid blue;
+}
+
+.sin-revelar, .banner{ /*Diseño de celda sin revelar*/
+    background-color: rgb(198, 200, 207);
+}
+
+/*.banner{ /*Diseño de celda marcada con banner
+    background-color: yellow;
+}*/
+
+.banner img {
+    max-width: 100%;
+}
+
+.empty{ /*diseño que tendrán las celdas vacías*/
+    background-color: white;
+}
+
+.mina{ /*diseño qie tendrán las celdas con minas*/
+    background-color: red;
+}
+
+.cerca{ /*Diseño que tendrán las celdas cercanas a minas*/
+    background-color: green;
+}
+
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    max-height: 58px;
+}
+
+
+/*Clases Config.html*/
+.input-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100%;
+}
+
+.input-row h3{
+    min-width: 100px;
+    text-align: left;
+}
+
+.input-row input{
+    width: 50px;
+    height: 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.input-row button{
+    padding: 5px 20px;
+    margin: 0px 5px;
+    font-size: 15px;
+    color: white;
+    background-color: rgb(20, 20, 50);
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0,0,0, 0.2);
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: large;
+}
+
+.input-row button:hover{
+    background-color: rgb(20, 20, 80);
+    border: 1px solid rgba(0,0,0, 0.5);
+    box-shadow: 0 3px 10px rgba(100,100,100,0.2);
+}
+
+.input-row button:active{
+    background-color: transparent;
+}
+
+/*Clases de Alerta*/
+
+/*.alerta{
+    display: block;
+    background-color: rgb(212, 12, 12);
+    margin-top: 15px;
+    padding: 5px;
+    gap:0;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    border-radius: 15px;
+}
+
+.alerta p{
+    margin: 0;
+    padding: 10px;
+}
+
+.alert-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+    max-height: 50px;
+    border-bottom: 1px solid rgb(130, 12, 12);
+    padding: 0;
+}
+
+.alert-header h3{
+    margin: 5px;
+}
+
+.alerta button{
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 15px;
+    font-weight: 700px;
+    color: white;
+    font-size: large;
+}
+
+.alerta button:hover{
+    background-color: rgba(0,0,0,0.3);
+}*/
+
+.alerta{
+    display: flex;
+    background-color: #b53a3a;
+    color: white;
+    width: 100%;
+    max-width: 400px;
+    align-items: center;
+    max-height: 100px;
+}
+
+.alerta .img-box{
+    display: flex;
+    background-color: black;
+    color: white;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 100%;
+}
+
+.alerta .text-cont {
+  /*flex: 1;
+  padding: 0.5rem;*/
+  text-align: center;
+  background-color: blue;
+  max-height: 100px;
+}
