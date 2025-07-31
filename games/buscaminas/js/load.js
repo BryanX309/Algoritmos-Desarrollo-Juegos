@@ -39,16 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let col = 1; col <=cols; col++){
                 const cell = document.createElement('div');
                 cell.id = `${col}-${row}`
-                cell.value = 0;
-                cell.classList.add('celda');
+                cell.classList.add('celda', 'sin-revelar');
+                //si la celda es incluida en las coordenadas de minas, su value es de mina o 0 por defecto
+                cell.value = coordenadas.includes(cell.id) ? 'mina':0;
                 
-                if(coordenadas.includes(cell.id)){
-                    //cell.classList.add('mina');
-                    cell.value = 'mina';
-                }/*else{
-                    cell.classList.add('sin-revelar');
-                }*/
-                cell.classList.add('sin-revelar');
+                if((row + col)%2 === 0){
+                    cell.classList.add('claro');
+                }else{
+                    cell.classList.add('oscuro');
+                }
 
                 cell.addEventListener('click', (e)=>{
                     if(e.target.classList.value.includes('sin-revelar')){
@@ -65,28 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             case 0:
                                 cell.classList.add('empty');
 
-                                /*celdaClick(col, row-1);// misma columna fila de arriba
-                                celdaClick(col, row+1);// misma columna fila de Abajo
-                                celdaClick(col-1, row);// misma fila Columna Anterior
-                                celdaClick(col+1, row);// misma fila Columna Siguiente
-                                
-                                function celdaClick(x, y){ // ejecuta el evento Click de la celda según su coordenada
-                                    const id=`${x}-${y}`
-                                    const celda = document.getElementById(id);
-    
-                                    if(celda !== null && celda.value !== 'mina'&& celda.value !== 'banner'&&celda.classList.value.includes('sin-revelar')){
-                                        //console.log(celda);
-                                        celda.click();
-                                    }
-                                }*/
-
                                 for (let x = col-1; x <= col+1; x++) {
                                     for (let y = row-1; y <=row+1; y++) {
                                         const id=`${x}-${y}`
                                         const celda = document.getElementById(id);
     
                                         if(celda !== null && celda.value !== 'mina'&& celda.value !== 'banner'&&celda.classList.value.includes('sin-revelar')){
-                                            //console.log(celda);
                                             celda.click();
                                         }
                                     }
@@ -95,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                             default:
                                 const h2 = document.createElement('h2');
-                                e.target.classList.add('cerca');
+                                e.target.classList.add('cerca', `v${e.target.value}`);
                                 h2.classList.add('valor');
                                 h2.textContent = e.target.value;
                                 e.target.appendChild(h2);
@@ -116,28 +99,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 //click izquierdo / Marcar Mina
                 cell.addEventListener('contextmenu', (e)=>{
-                    e.preventDefault();
-                    console.log(e);
+                    e.preventDefault();                    
                     
                     celda = e.currentTarget;
                     const bannerCounter = parseInt(showMinas.textContent);
                     const clases = celda.classList.value;
-
-                    if(clases.includes('sin-revelar')){
-                        celda.classList.remove('sin-revelar');
-                        celda.classList.add('banner');
-                        showMinas.textContent = `${bannerCounter-1}${bannerCounter-1<0 ? '?':''}`;
-                        
-                        banner = document.createElement('img');
-                        banner.src = "https://www.google.com/logos/fnbx/minesweeper/flag_icon.png";
-
-                        celda.appendChild(banner);
-                    }else{
-                        celda.innerHTML = '';
-                        celda.classList.remove('banner');
-                        celda.classList.add('sin-revelar');
-                        showMinas.textContent = `${bannerCounter+1}${bannerCounter+1<0 ? '?':''}`;
+                    if(clases.includes('sin-revelar') || clases.includes('banner')){
+    
+                        if(clases.includes('sin-revelar')){
+                            celda.classList.remove('sin-revelar');
+                            celda.classList.add('banner');
+                            showMinas.textContent = `${bannerCounter-1}${bannerCounter-1<0 ? '?':''}`;
+                            
+                            banner = document.createElement('img');
+                            banner.src = "https://www.google.com/logos/fnbx/minesweeper/flag_icon.png";
+    
+                            celda.appendChild(banner);
+                        }else{
+                            celda.innerHTML = '';
+                            celda.classList.remove('banner');
+                            celda.classList.add('sin-revelar');
+                            showMinas.textContent = `${bannerCounter+1}${bannerCounter+1<0 ? '?':''}`;
+                        }
                     }
+                    
                 })
 
                 newRow.appendChild(cell);

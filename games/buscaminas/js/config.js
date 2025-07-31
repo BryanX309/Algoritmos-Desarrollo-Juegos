@@ -109,9 +109,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
             localStorage.setItem('filas',filas.value);
             localStorage.setItem('minas',minas.value);
 
-            window.location.href = "../../pages/buscaminas/tablero.html";
+            window.location.href = "../pages/tablero.html";
         }
     })
 
-    btnCancelar.addEventListener('click', ()=> window.location.href = "../../pages/buscaminas/tablero.html");
+    btnCancelar.addEventListener('click', ()=> window.location.href = "../pages/tablero.html");
 })

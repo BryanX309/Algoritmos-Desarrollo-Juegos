@@ -62,6 +62,10 @@
     border-radius: 3px;
     border: 1px solid transparent;
     cursor: pointer;
+    border-top: 2px solid rgba(255, 255, 255, 0.5);
+    border-left: 2px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+    border-right: 2px solid rgba(0, 0, 0, 0.5);
 }
 
 .tablero .celda .valor{
@@ -69,11 +73,16 @@
 }
 
 .tablero .celda:hover{
-    border: 1px solid blue;
+    
+    border: 2px solid blue;
 }
 
-.sin-revelar, .banner{ /*Diseño de celda sin revelar*/
-    background-color: rgb(198, 200, 207);
+.sin-revelar.claro, .banner.claro{ /*Diseño de celda sin revelar*/
+    background-color: rgb(150, 200, 240);
+}
+
+.sin-revelar.oscuro, .banner.oscuro{ /*Diseño de celda sin revelar*/
+    background-color: rgb(120, 180, 230);
 }
 
 /*.banner{ /*Diseño de celda marcada con banner
@@ -84,16 +93,31 @@
     max-width: 100%;
 }
 
-.empty{ /*diseño que tendrán las celdas vacías*/
-    background-color: white;
+/*diseño que tendrán las celdas vacías y cercanas a minas*/
+.empty.claro, .cerca.claro{
+    background-color: rgb(245, 210, 160);
 }
+
+.empty.oscuro, .cerca.oscuro{
+    background-color: rgb(219, 183, 124);
+}
+
+.cerca{
+    font-size: 25px;
+}
+
+.cerca.v1{color: rgb(0,0,255);}
+.cerca.v2{color: rgb(3,131,1);}
+.cerca.v3{color: rgb(255,0,0);}
+.cerca.v4{color: rgb(2,0,132);}
+.cerca.v5{color: rgb(134,0,0);}
+.cerca.v6{color: rgb(1,130,132);}
+.cerca.v7{color: rgb(133,0,131);}
+.cerca.v8{color: rgb(119,119,119);}
+
 
 .mina{ /*diseño qie tendrán las celdas con minas*/
     background-color: red;
-}
-
-.cerca{ /*Diseño que tendrán las celdas cercanas a minas*/
-    background-color: green;
 }
 
 .row{
