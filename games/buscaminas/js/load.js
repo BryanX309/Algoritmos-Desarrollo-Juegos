@@ -4,27 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
     btnConfig.addEventListener('click', () => window.location.href = "./config.html");
     const tablero = document.querySelector('.tablero');
     const timer = document.querySelector('#timer');
-    const win = false; //aquí se guarda si el juego se ganó
-    let time = 0;
+    let win = null; //aquí se guarda si el juego se ganó
+    let time = 0, delay = 0;
 
     //variables para el cronometro
     let cronometroInterval = null;
     let segundosTranscurridos = 0;
     let juegoIniciado = false;
 
+    const cols = parseInt(localStorage.getItem('columnas')) || 8;
+    const filas = parseInt(localStorage.getItem('filas')) || 8;
+    const minas = parseInt(localStorage.getItem('minas')) || 8;
+
     genTablero();
 
-    /*while(win === false){
-        setTimeout(()=>{
-            time++;
-            timer.textContent = time;
-        }, 1000);
-    }*/
-
     function genTablero() {
-        const cols = parseInt(localStorage.getItem('columnas')) || 8;
-        const filas = parseInt(localStorage.getItem('filas')) || 8;
-        const minas = parseInt(localStorage.getItem('minas')) || 8;
 
         const showMinas = document.querySelector("#nMinas");
 
@@ -43,8 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        //console.log(coordenadas);
-
         //generación de celdas
         for (let row = 1; row <= filas; row++) {
             const newRow = document.createElement('div');
@@ -55,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cell = document.createElement('div');
                 cell.id = `${col}-${row}`
                 cell.classList.add('celda', 'sin-revelar');
+
                 //si la celda es incluida en las coordenadas de minas, su value es de mina o 0 por defecto
                 cell.value = coordenadas.includes(cell.id) ? 'mina' : 0;
 
@@ -65,19 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 cell.addEventListener('click', (e) => {
-                    if (e.target.classList.value.includes('sin-revelar')) {
-                        if(!juegoIniciado){
+                    if (e.target.classList.value.includes('sin-revelar') && win !== false) {
+                        if (!juegoIniciado) {
                             iniciarCronometro();
                         }
                         e.target.classList.remove('sin-revelar');
                         switch (e.target.value) {
                             case 'mina':
-                                cell.classList.add('mina');
-                                setTimeout(() => {
-                                    alert('Perdiste, inténtalo otra vez');
-                                    detenerCronometro();
-                                    location.reload();
-                                }, 100);
+                                explotaMina(e.target.id);
                                 break;
 
                             case 0:
@@ -97,21 +85,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             default:
                                 const h2 = document.createElement('h2');
+                                //const h2 = document.createElement('img');
                                 e.target.classList.add('cerca', `v${e.target.value}`);
                                 h2.classList.add('valor');
                                 h2.textContent = e.target.value;
+
+                                /*h2.src = `../src/img/numbers/${e.target.value}.png`;*/
+                                ajustarTextoCeldas();
                                 e.target.appendChild(h2);
                                 break;
                         }
 
-                        const celdasOcultas = document.querySelectorAll('.sin-revelar');
-                        const celdasMarcadas = document.querySelectorAll('.banner');
-                        if (celdasOcultas.length + celdasMarcadas.length === minas) {
-                            setTimeout(() => {
-                                alert('Felicidades: Has Ganado');
-                                detenerCronometro();
-                                /*location.reload();*/
-                            }, 100);
+                        const celdasOcultas = [...document.querySelectorAll('.sin-revelar'), ...document.querySelectorAll('.banner')];
+                        const minasOcultas = [...celdasOcultas.filter(celda => celda.value === 'mina')];//filtra las minas en las celdas ocultas o marcadas
+
+                        if (minasOcultas.length === celdasOcultas.length && win !== true) {
+                            win = true;
+                            juegoTerminado();
                         }
                     }
                 })
@@ -123,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     celda = e.currentTarget;
                     const bannerCounter = parseInt(showMinas.textContent);
                     const clases = celda.classList.value;
+
                     if (clases.includes('sin-revelar') || clases.includes('banner')) {
 
                         if (clases.includes('sin-revelar')) {
@@ -131,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             showMinas.textContent = `${bannerCounter - 1}${bannerCounter - 1 < 0 ? '?' : ''}`;
 
                             banner = document.createElement('img');
-                            banner.src = "https://www.google.com/logos/fnbx/minesweeper/flag_icon.png";
+                            banner.src = "../src/img/red_flag_icon.png";
 
                             celda.appendChild(banner);
                         } else {
@@ -141,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             showMinas.textContent = `${bannerCounter + 1}${bannerCounter + 1 < 0 ? '?' : ''}`;
                         }
                     }
-
                 })
 
                 newRow.appendChild(cell);
@@ -172,6 +162,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+
+        function explotaMina(celdaId) {
+
+            const booms = [celdaId, ...coordenadas.filter(id => id !== celdaId)]
+            const maxDelay = 250, minDelay = 80;
+            const maxMines = 172, minMines = 8;
+            const delayAdd = maxDelay - (maxDelay - minDelay) / (maxMines - minMines) * (minas - minMines);//para que todas las minas exploten en un tiempo máximo
+
+            booms.forEach(celda => {
+                const cell = document.getElementById(celda);
+                setTimeout(() => {
+                    cell.innerHTML = '';
+                    const audio = new Audio('../src/sonidos/explosion.mp3');
+                    audio.play();
+                    const bomb = document.createElement('img');
+                    bomb.src = '../src/img/bomb-icon.png'
+                    cell.appendChild(bomb);
+                    cell.classList.add('exploding');
+                }, delay);
+                delay += delayAdd;
+            })
+            win = false;
+            juegoTerminado();
+        }
     }
 
     // Función para iniciar el cronómetro
@@ -187,9 +201,98 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    // Función para detener el cronómetro (llámala desde tu función de fin de juego)
-    function detenerCronometro() {
+    function juegoTerminado() {
         clearInterval(cronometroInterval);
+
+        setTimeout(() => {
+            if (win) {
+                const celdas = [...document.querySelectorAll('.sin-revelar'), ...document.querySelectorAll('.banner')]
+                celdas.forEach(celda => {
+                    if (celda.value === 'mina') {
+                        celda.innerHTML = '';
+                        celda.classList.add('banner');
+                        const img = document.createElement('img');
+                        img.src = '../src/img/bomb-icon.png';
+                        celda.appendChild(img);
+                    }
+                });
+
+            }
+            mensajeBox(win);
+        }, delay + (win ? 100 : 1000));
     }
 
+    function mensajeBox(win) {
+        const body = document.querySelector('body');
+
+        const container = document.createElement('div');
+        const box = document.createElement('div');
+        const h2 = document.createElement('h2');
+        const btnRetry = document.createElement('button');
+        const div = document.createElement('div');
+
+        container.classList.add('msjBox-container');
+        box.classList.add('msjBox-display');
+        btnRetry.textContent = 'Jugar Otra Vez';
+        btnRetry.addEventListener('click', () => {
+            location.reload();
+        })
+
+        box.appendChild(h2);
+        if (win) {
+            function scoreRow(scoreLabel, puntos){
+                const div = document.createElement('div');
+                const label = document.createElement('h3');
+                const score = document.createElement('h3');
+
+                div.classList.add('score-row');
+                label.textContent = scoreLabel;
+                score.textContent = puntos;
+
+                div.appendChild(label);
+                div.appendChild(score);
+
+                return div;
+            }
+
+            box.classList.add('win');
+            h2.textContent = 'Felicidades, Has Ganado';
+
+            //pontajes
+            const puntosTablero = cols * filas * 10;
+            const puntosMinas = minas * 100;
+            const puntosTiempo = Math.floor((minas*15 / segundosTranscurridos));
+            const puntos = (puntosTablero+puntosMinas)*puntosTiempo;
+
+            box.appendChild(scoreRow(`Tablero ${cols} x ${filas}:`, `${puntosTablero} pts`));
+            box.appendChild(scoreRow(`Minas ${minas}:`, `${puntosMinas} pts`));
+            box.appendChild(scoreRow(`Bonus por Tiempo:`, `x${puntosTiempo}`));
+            box.appendChild(scoreRow(`Puntuación Final:`, `${puntos} pts`));
+
+            /*//siguiente Nivel
+            const btnNext = document.createElement('button');*/
+        } else {
+            box.classList.add('lose');
+            h2.textContent = 'Lo siento, Perdiste';
+        }
+
+        body.appendChild(container);
+        container.appendChild(box);
+        div.appendChild(btnRetry);
+        box.appendChild(div);
+    }
+
+    function ajustarTextoCeldas() {
+        const celdas = document.querySelectorAll('.cerca');
+
+        celdas.forEach((celda) => {
+            const referencia = document.querySelector('.sin-revelar') !== null ? document.querySelector('.sin-revelar') : document.querySelector('.empty')
+            const size = referencia.offsetHeight
+            //console.log(size);
+
+            celda.style.fontSize = size * 0.45 + 'px';
+        })
+    }
+    //window.addEventListener('load', ()=>ajustarTextoCeldas());
+    window.addEventListener('resize', () => ajustarTextoCeldas());
 })

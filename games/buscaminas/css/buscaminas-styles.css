@@ -1,15 +1,15 @@
-.card{
+.card {
     display: grid;
     padding: 30px;
     justify-content: center;
     align-items: center;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255,255,255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     min-width: 40%;
 }
 
-.config{
+.config {
     size: 50px;
     font-style: normal;
     color: white;
@@ -17,24 +17,24 @@
     width: 50px;
 }
 
-.config:hover{
+.config:hover {
     color: rgb(90, 200, 80);
 }
 
 
-.game-header{
+.game-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-height: 50px;
 }
 
-.game-header img{
+.game-header img {
     height: 30px;
     width: 30px;
 }
 
-.flex{
+.flex {
     display: flex;
     align-items: center;
 }
@@ -42,16 +42,16 @@
 /*Clases tablero*/
 
 
-.tablero{
+.tablero {
     display: block;
     min-width: 250px;
     max-width: 750px;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255,255,255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 5px;
 }
 
-.tablero .celda{
+.tablero .celda {
     display: flex;
     width: 50px;
     aspect-ratio: 1 / 1;
@@ -66,22 +66,27 @@
     border-left: 2px solid rgba(255, 255, 255, 0.5);
     border-bottom: 2px solid rgba(0, 0, 0, 0.5);
     border-right: 2px solid rgba(0, 0, 0, 0.5);
+    font-size: 2px;
 }
 
-.tablero .celda .valor{
+.tablero .celda .valor {
     margin: 0;
 }
 
-.tablero .celda:hover{
-    
+.tablero .celda:hover {
+
     border: 2px solid blue;
 }
 
-.sin-revelar.claro, .banner.claro{ /*Diseño de celda sin revelar*/
+.sin-revelar.claro,
+.banner.claro {
+    /*Diseño de celda sin revelar*/
     background-color: rgb(150, 200, 240);
 }
 
-.sin-revelar.oscuro, .banner.oscuro{ /*Diseño de celda sin revelar*/
+.sin-revelar.oscuro,
+.banner.oscuro {
+    /*Diseño de celda sin revelar*/
     background-color: rgb(120, 180, 230);
 }
 
@@ -90,37 +95,87 @@
 }*/
 
 .banner img {
-    max-width: 100%;
+    width: 100%;
 }
 
 /*diseño que tendrán las celdas vacías y cercanas a minas*/
-.empty.claro, .cerca.claro{
+.empty.claro,
+.cerca.claro {
     background-color: rgb(245, 210, 160);
 }
 
-.empty.oscuro, .cerca.oscuro{
+.empty.oscuro,
+.cerca.oscuro {
     background-color: rgb(219, 183, 124);
 }
 
-.cerca{
+.cerca {
     font-size: 25px;
 }
 
-.cerca.v1{color: rgb(0,0,255);}
-.cerca.v2{color: rgb(3,131,1);}
-.cerca.v3{color: rgb(255,0,0);}
-.cerca.v4{color: rgb(2,0,132);}
-.cerca.v5{color: rgb(134,0,0);}
-.cerca.v6{color: rgb(1,130,132);}
-.cerca.v7{color: rgb(133,0,131);}
-.cerca.v8{color: rgb(119,119,119);}
-
-
-.mina{ /*diseño qie tendrán las celdas con minas*/
-    background-color: red;
+.cerca.v1 {
+    color: rgb(0, 0, 255);
 }
 
-.row{
+.cerca.v2 {
+    color: rgb(3, 131, 1);
+}
+
+.cerca.v3 {
+    color: rgb(255, 0, 0);
+}
+
+.cerca.v4 {
+    color: rgb(2, 0, 132);
+}
+
+.cerca.v5 {
+    color: rgb(134, 0, 0);
+}
+
+.cerca.v6 {
+    color: rgb(1, 130, 132);
+}
+
+.cerca.v7 {
+    color: rgb(133, 0, 131);
+}
+
+.cerca.v8 {
+    color: rgb(119, 119, 119);
+}
+
+.exploding {
+    animation: explode 0.4s ease-out forwards;
+    background-color: red;
+    pointer-events: none;
+}
+
+.exploding img {
+    width: 70%;
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 5px red;
+    }
+
+    50% {
+        transform: scale(1.3);
+        box-shadow: 0 0 15px orange, 0 0 30px yellow;
+        background-color: orange;
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 5px black;
+        background-color: black;
+        color: white;
+    }
+}
+
+.row {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -128,28 +183,42 @@
     max-height: 58px;
 }
 
+/*Clases de mensaje final (gane o pierda)*/
 
-/*Clases Config.html*/
-.input-row{
+.msjBox-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* fondo oscuro semitransparente */
     display: flex;
-    align-items: center;
     justify-content: center;
-    min-width: 100%;
+    align-items: center;
 }
 
-.input-row h3{
-    min-width: 100px;
-    text-align: left;
-}
-
-.input-row input{
-    width: 50px;
-    height: 30px;
+.msjBox-display {
+    display: grid;
+    margin: 40%;
+    min-width: 40%;
+    min-height: 40%;
     border-radius: 15px;
-    text-align: center;
+    border: 3px solid rgba(255, 255, 255, 0.7);
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
 }
 
-.input-row button{
+.win {
+    background-color: rgba(0, 204, 0, 0.8);
+}
+
+.lose {
+    background-color: rgba(204, 0, 0, 0.8);
+}
+
+.msjBox-display button {
     padding: 5px 20px;
     margin: 0px 5px;
     font-size: 15px;
@@ -157,20 +226,75 @@
     background-color: rgb(20, 20, 50);
     border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0,0,0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin: 15px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: large;
+}
+
+.msjBox-display button:hover {
+    background-color: rgb(20, 20, 80);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 10px rgba(100, 100, 100, 0.2);
+}
+
+.msjBox-display button:active {
+    background-color: transparent;
+}
+
+.msjBox-display .score-row{
+    max-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+}
+
+/*Clases Config.html*/
+.input-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100%;
+}
+
+.input-row h3 {
+    min-width: 100px;
+    text-align: left;
+}
+
+.input-row input {
+    width: 50px;
+    height: 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.input-row button {
+    padding: 5px 20px;
+    margin: 0px 5px;
+    font-size: 15px;
+    color: white;
+    background-color: rgb(20, 20, 50);
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 10px;
     cursor: pointer;
     font-weight: 700;
     font-size: large;
 }
 
-.input-row button:hover{
+.input-row button:hover {
     background-color: rgb(20, 20, 80);
-    border: 1px solid rgba(0,0,0, 0.5);
-    box-shadow: 0 3px 10px rgba(100,100,100,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 10px rgba(100, 100, 100, 0.2);
 }
 
-.input-row button:active{
+.input-row button:active {
     background-color: transparent;
 }
 
@@ -222,7 +346,7 @@
     background-color: rgba(0,0,0,0.3);
 }*/
 
-.alerta{
+.alerta {
     display: flex;
     background-color: #b53a3a;
     color: white;
@@ -232,7 +356,7 @@
     max-height: 100px;
 }
 
-.alerta .img-box{
+.alerta .img-box {
     display: flex;
     background-color: black;
     color: white;
@@ -245,9 +369,9 @@
 }
 
 .alerta .text-cont {
-  /*flex: 1;
+    /*flex: 1;
   padding: 0.5rem;*/
-  text-align: center;
-  background-color: blue;
-  max-height: 100px;
+    text-align: center;
+    background-color: blue;
+    max-height: 100px;
 }
