@@ -1,7 +1,8 @@
-.teclado{
+#teclado{
+    
     padding: 2.5px;
     margin: 0px;
-    display: grid;
+    display: none;
     flex-direction: column;
     gap: 0px;
     width: 90vw;
@@ -13,12 +14,18 @@
 
 }
 #ahorcado-img{
-    background-color: rgba(61, 61, 61, 0.092);
     width: 36vw;
+    border-radius: 5px;
+    padding: 0;
+    background-color: rgba(61, 61, 61, 0.092);
+    height: 36vw;
     border-radius: 5px;
     margin: 0;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    gap: 0px;
+    display: flex;
 }
+
 .game-grid{
     padding: 10px;
     gap: 0px;
@@ -26,7 +33,7 @@
     margin: 0 0 20px 0;
 }
 
-.teclado div button{
+.tecla{
     background-color: rgba(59, 59, 59, 0.082);
     width: 10%;
     height: 100%;
@@ -38,9 +45,56 @@
     font-size: large;
 }
 
+.tecla-correcta{
+    background-color: rgba(54, 108, 56, 0.36);
+    color: rgb(124, 234, 139);
+    border: 2px solid rgb(137, 240, 152);
+    width: 10%;
+    height: 100%;
+    margin: 0px 2.5px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    font-size: large;
+}
+.tecla-incorrecta{
+    background-color: rgba(108, 54, 54, 0.36);
+    color: rgb(234, 124, 124);
+    border: 2px solid rgb(240, 137, 137);
+    width: 10%;
+    height: 100%;
+    margin: 0px 2.5px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    font-size: large;
+}
+
+.tecla{
+    background-color: rgba(59, 59, 59, 0.082);
+    width: 10%;
+    height: 100%;
+    color: aliceblue;
+    margin: 0px 2.5px;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255, 0.2);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    font-size: large;
+}
+.tecla-disabled{
+    background-color: rgba(59, 59, 59, 0.082);
+    width: 10%;
+    height: 100%;
+    color: rgba(240, 248, 255, 0.466);
+    margin: 0px 2.5px;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255, 0.2);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    font-size: large;
+}
+
 .palabra {
     margin: 0px;
     padding: 0px;
+    gap: 10px;
     background-color: rgba(4, 4, 102, 0);
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     height: 3.5rem;
@@ -50,7 +104,7 @@
     align-items: center;
 }
 
-.teclado-fila button:hover{
+.tecla:hover{
     background-color: rgba(63, 54, 108, 0.36);
     color: rgb(142, 124, 234);
     border: 2px solid rgb(154, 137, 240);
@@ -72,6 +126,34 @@
     align-items: center;
 }
 
+#dif-in-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+
+.dificultad-inicial{
+    width: 36vw;
+    padding: 10px;
+    background-color: rgba(59, 59, 59, 0.082);
+    color: aliceblue;
+    margin: 10px 0px;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255, 0.2);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    font-size: large;
+}
+.dificultad-inicial:hover{
+    background-color: rgba(63, 54, 108, 0.36);
+    color: rgb(142, 124, 234);
+    border: 2px solid rgb(154, 137, 240);
+    box-shadow: 0px 6px 13px rgba(0, 0, 0, 0.38);
+
+}
+
 .teclado-background {
     gap: 0px;
     margin: 0px;
@@ -81,4 +163,49 @@
     border-radius: 15px;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255,255,255, 0.2);
+}
+
+.dificultad{
+    min-width: 3rem;
+    flex-direction: row;
+    display: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(31, 31, 46, 0.863);
+    color: aliceblue;
+    height: 3rem;
+    margin: 0.3rem;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255, 0.2);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    font-size: large;
+}
+
+
+
+.dificultad:hover{
+    /* background-color: rgba(63, 54, 108, 0.36); */
+    /* color: rgb(142, 124, 234); */
+    border: 2px solid rgb(154, 137, 240);
+    box-shadow: 0px 6px 13px rgba(0, 0, 0, 0.38);
+
+}
+
+#dif-disabled{
+    display: flex;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.479);
+    color: rgb(255, 255, 255);
+    filter: brightness(0.5);
+}
+
+#option-dificultad{
+    background-color: rgba(59, 59, 59, 0.082);
+    color: aliceblue;
+    margin: 0px 2.5px;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255, 0.2);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    font-size: large;
 }
