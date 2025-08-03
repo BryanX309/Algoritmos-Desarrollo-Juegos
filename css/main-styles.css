@@ -105,36 +105,50 @@ header a:hover{
     justify-content: center;
     align-items: center;
     padding: 15px;
+
+    padding: 20px;
+    backdrop-filter: blur(5px);
+    text-align: center;
 }
 
 .win {
-    background-color: rgba(0, 204, 0, 0.8);
+    /*background-color: rgba(0, 204, 0, 0.8);*/
+
+    background: rgba(54, 108, 56, 0.36);
+    color: rgb(137, 240, 152);
+    border: 3px solid rgb(137, 240, 152);
 }
 
 .lose {
-    background-color: rgba(204, 0, 0, 0.8);
+    /*background-color: rgba(204, 0, 0, 0.8);*/
+
+    background-color: rgba(108, 54, 54, 0.36);
+    color: rgb(234, 124, 124);
+    border: 2px solid rgb(240, 137, 137);
 }
 
 .msjBox-display button {
-    padding: 5px 20px;
-    margin: 0px 5px;
-    font-size: 15px;
-    color: white;
-    background-color: rgb(20, 20, 50);
+    background-color: transparent;
+    color: aliceblue;
+    height: 3rem;
+    margin: 0.3rem;
     border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    margin: 15px;
-    cursor: pointer;
-    font-weight: 700;
+    border: 2px solid rgba(255,255,255, 0.2);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     font-size: large;
+    font-weight: 700;
+    padding: 10px 15px;
+    margin: 15px;
 }
 
-.msjBox-display button:hover {
-    background-color: rgb(20, 20, 80);
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    box-shadow: 0 3px 10px rgba(100, 100, 100, 0.2);
+.msjBox-display.win button:hover {
+    background-color: rgb(137, 240, 152);
+    color: rgb(5, 129, 24);
+}
+
+.msjBox-display.lose button:hover {
+    background-color: rgb(234, 124, 124);
+    color: rgb(129, 5, 5);
 }
 
 .msjBox-display button:active {

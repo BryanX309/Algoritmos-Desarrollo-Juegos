@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algoritmos Games</title>
     <link rel="stylesheet" href="../../../css/main-styles.css">
     <link rel="stylesheet" href="../css/buscaminas-styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=settings" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    
+
 </head>
+
 <body>
     <header>
         <h1>Algoritmos y Estructuras de Datos</h1>
@@ -20,8 +25,12 @@
             <h2>Cuidado donde pisas</h2>
             <div class="game-header">
                 <div>
-                    <span class="material-symbols-outlined config" id="config" title="Configuration">
-                        settings
+                    <span class="config" id="config" title="Configuration">
+                        <i class="material-icons">settings</i>
+                    </span>
+
+                    <span class="config" id="sonido" title="Sonido: Habilitado">
+                        <i class="material-icons">volume_up</i>
                     </span>
                 </div>
 
@@ -32,12 +41,13 @@
 
                 <div class="flex">
                     <img src="../src/img/clock_icon.png" alt="">
-                    <h2 id = 'cronometro'>00:00</h2>
+                    <h2 id='cronometro'>00:00</h2>
                 </div>
             </div>
             <div class="tablero"></div>
         </div>
-    </section> 
+    </section>
     <script src="../js/load.js"></script>
 </body>
+
 </html>

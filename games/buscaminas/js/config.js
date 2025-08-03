@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         </div>
         */
 
-        card.lastChild.remove;
+        card.lastChild.remove();
         
         const flex = document.createElement('div');
         const alerta = document.createElement('div');

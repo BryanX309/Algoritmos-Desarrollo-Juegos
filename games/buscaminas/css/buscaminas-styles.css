@@ -230,7 +230,7 @@
 
 /*Clases de Alerta*/
 
-/*.alerta{
+.alerta{
     display: block;
     background-color: rgb(212, 12, 12);
     margin-top: 15px;
@@ -274,8 +274,8 @@
 
 .alerta button:hover{
     background-color: rgba(0,0,0,0.3);
-}*/
-
+}
+/*
 .alerta {
     display: flex;
     background-color: #b53a3a;
@@ -296,7 +296,7 @@
     justify-content: center;
     width: 40px;
     height: 100%;
-}
+}*/
 
 .alerta .text-cont {
     /*flex: 1;

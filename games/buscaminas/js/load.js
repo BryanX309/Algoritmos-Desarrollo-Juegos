@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const btnConfig = document.querySelector('#config');
+    const body = document.querySelector('body');
 
     btnConfig.addEventListener('click', () => window.location.href = "./config.html");
     const tablero = document.querySelector('.tablero');
     const timer = document.querySelector('#timer');
     let win = null; //aquí se guarda si el juego se ganó
-    let time = 0, delay = 0;
+    let delay = 0, bodyClick = false;
 
     //variables para el cronometro
     let cronometroInterval = null;
@@ -16,7 +17,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const filas = parseInt(localStorage.getItem('filas')) || 8;
     const minas = parseInt(localStorage.getItem('minas')) || 8;
 
+    let sonido = JSON.parse(localStorage.getItem('sonido'));
+    
+    sonido = sonido !== null ? sonido : true // define como true el valor por defecto
+    // se hace asi porque || funciona como operador O y si en localStorage es falso queda (falso o verdadero) = verdadero
+
+    const btnSonido = document.querySelector('#sonido');
+    btnSonido.value = sonido;
+    cargarBtnSonido(sonido)
+
+    body.addEventListener('click', ()=>{
+        if(win !== null){
+            console.log(win);
+            if(bodyClick){
+                mensajeBox(win);
+            }else{
+                bodyClick = true; //el mensaje aparecerá solo si es el segundo click en el body
+            }
+        }
+    })
+
+    function cargarBtnSonido(booleano){
+        const icon = btnSonido.children[0];
+
+        icon.innerHTML = booleano ? 'volume_up' : 'volume_off';
+    }
+    
+    btnSonido.addEventListener('click', (e)=>{
+        e.preventDefault();
+        sonido = !sonido;
+        e.target.value = sonido;
+        localStorage.setItem('sonido', sonido);
+
+        cargarBtnSonido(sonido);
+    })
+    
     genTablero();
+    //sonidoActivado();
 
     function genTablero() {
 
@@ -40,8 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
         //generación de celdas
         for (let row = 1; row <= filas; row++) {
             const newRow = document.createElement('div');
-
             newRow.classList.add('row');
+            newRow.addEventListener('contextmenu', (e) => e.preventDefault());
 
             for (let col = 1; col <= cols; col++) {
                 const cell = document.createElement('div');
@@ -164,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function explotaMina(celdaId) {
+            win = false;
 
             const booms = [celdaId, ...coordenadas.filter(id => id !== celdaId)]
             const maxDelay = 250, minDelay = 80;
@@ -174,8 +212,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cell = document.getElementById(celda);
                 setTimeout(() => {
                     cell.innerHTML = '';
-                    const audio = new Audio('../src/sonidos/explosion.mp3');
-                    audio.play();
+                    if(sonido){
+                        const audio = new Audio('../src/sonidos/explosion.mp3');
+                        audio.play();
+                    }
                     const bomb = document.createElement('img');
                     bomb.src = '../src/img/bomb-icon.png'
                     cell.appendChild(bomb);
@@ -183,7 +223,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, delay);
                 delay += delayAdd;
             })
-            win = false;
             juegoTerminado();
         }
     }
@@ -223,7 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function mensajeBox(win) {
-        const body = document.querySelector('body');
+        if(document.querySelector('.msjBox-container') !== null){
+            return;
+        }
 
         const container = document.createElement('div');
         const box = document.createElement('div');
