@@ -21,7 +21,6 @@
     color: rgb(90, 200, 80);
 }
 
-
 .game-header {
     display: flex;
     align-items: center;
@@ -40,7 +39,6 @@
 }
 
 /*Clases tablero*/
-
 
 .tablero {
     display: block;
@@ -78,21 +76,16 @@
     border: 2px solid blue;
 }
 
+/*Diseño de celdas sin revelar o marcadas*/
 .sin-revelar.claro,
 .banner.claro {
-    /*Diseño de celda sin revelar*/
     background-color: rgb(150, 200, 240);
 }
 
 .sin-revelar.oscuro,
 .banner.oscuro {
-    /*Diseño de celda sin revelar*/
     background-color: rgb(120, 180, 230);
 }
-
-/*.banner{ /*Diseño de celda marcada con banner
-    background-color: yellow;
-}*/
 
 .banner img {
     width: 100%;
@@ -232,7 +225,7 @@
 
 .alerta{
     display: block;
-    background-color: rgb(212, 12, 12);
+    background-color: rgb(212, 33,33);
     margin-top: 15px;
     padding: 5px;
     gap:0;
@@ -275,32 +268,8 @@
 .alerta button:hover{
     background-color: rgba(0,0,0,0.3);
 }
-/*
-.alerta {
-    display: flex;
-    background-color: #b53a3a;
-    color: white;
-    width: 100%;
-    max-width: 400px;
-    align-items: center;
-    max-height: 100px;
-}
-
-.alerta .img-box {
-    display: flex;
-    background-color: black;
-    color: white;
-    padding: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 100%;
-}*/
 
 .alerta .text-cont {
-    /*flex: 1;
-  padding: 0.5rem;*/
     text-align: center;
     background-color: blue;
     max-height: 100px;

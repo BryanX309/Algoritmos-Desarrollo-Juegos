@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     body.addEventListener('click', ()=>{
         if(win !== null){
-            console.log(win);
             if(bodyClick){
                 mensajeBox(win);
             }else{
@@ -59,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     
     genTablero();
-    //sonidoActivado();
 
     function genTablero() {
 
@@ -128,19 +126,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             default:
                                 const h2 = document.createElement('h2');
-                                //const h2 = document.createElement('img');
                                 e.target.classList.add('cerca', `v${e.target.value}`);
                                 h2.classList.add('valor');
                                 h2.textContent = e.target.value;
 
-                                /*h2.src = `../src/img/numbers/${e.target.value}.png`;*/
                                 ajustarTextoCeldas();
                                 e.target.appendChild(h2);
                                 break;
                         }
 
                         const celdasOcultas = [...document.querySelectorAll('.sin-revelar'), ...document.querySelectorAll('.banner')];
-                        const minasOcultas = [...celdasOcultas.filter(celda => celda.value === 'mina')];//filtra las minas en las celdas ocultas o marcadas
+                        const minasOcultas = [...celdasOcultas.filter(celda => celda.value === 'mina')];
+                        //filtra las minas en las celdas ocultas o marcadas
 
                         if (minasOcultas.length === celdasOcultas.length && win !== true) {
                             win = true;
@@ -190,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 //ya que los valores vienen en string los convertimos en enteros para manejarlos mejor
                 valor[0] = parseInt(valor[0]);
                 valor[1] = parseInt(valor[1]);
-                //console.log(valor);
 
                 for (let x = valor[0] - 1; x <= valor[0] + 1; x++) {
                     for (let y = valor[1] - 1; y <= valor[1] + 1; y++) {
@@ -198,8 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         const celda = document.getElementById(id);
                         if (celda !== null && celda.value !== 'mina') {
                             celda.value++;
-                            /*celda.classList.add('cerca');
-                            celda.innerHTML = `<h2 class="valor">${celda.value}</h2>`;*/
                         }
                     }
                 }
@@ -308,12 +302,11 @@ document.addEventListener('DOMContentLoaded', () => {
             //pontajes
             const puntosTablero = cols * filas * 10;
             const puntosMinas = minas * 100;
-            const puntosTiempo = Math.floor((minas*15 / segundosTranscurridos));
+            const puntosTiempo = 1 + Math.floor((minas*15 / segundosTranscurridos));
             const puntos = (puntosTablero+puntosMinas)*puntosTiempo;
 
             //Nueva Puntuación maxima
             const record = parseInt(localStorage.getItem('BMHighScore')) || 0;
-            console.log(record);
             if(puntos > record){
                 const msgSpecial = document.createElement('h2');
                 msgSpecial.textContent = '¡Mejor Puntaje!';
@@ -345,11 +338,9 @@ document.addEventListener('DOMContentLoaded', () => {
         celdas.forEach((celda) => {
             const referencia = document.querySelector('.sin-revelar') !== null ? document.querySelector('.sin-revelar') : document.querySelector('.empty')
             const size = referencia.offsetHeight
-            //console.log(size);
 
             celda.style.fontSize = size * 0.45 + 'px';
         })
     }
-    //window.addEventListener('load', ()=>ajustarTextoCeldas());
     window.addEventListener('resize', () => ajustarTextoCeldas());
 })
