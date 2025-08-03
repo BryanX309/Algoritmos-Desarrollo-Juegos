@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnConfig = document.querySelector('#config');
     const body = document.querySelector('body');
 
-    btnConfig.addEventListener('click', () => window.location.href = "./config.html");
     const tablero = document.querySelector('.tablero');
     const timer = document.querySelector('#timer');
     let win = null; //aquí se guarda si el juego se ganó
@@ -42,9 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         icon.innerHTML = booleano ? 'volume_up' : 'volume_off';
     }
+
+    btnConfig.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = "./config.html";
+    });
     
     btnSonido.addEventListener('click', (e)=>{
         e.preventDefault();
+        e.stopPropagation();
         sonido = !sonido;
         e.target.value = sonido;
         localStorage.setItem('sonido', sonido);
@@ -258,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             }
             mensajeBox(win);
-        }, delay + (win ? 100 : 1000));
+        }, delay + (win ? 200 : 1000));
     }
 
     function mensajeBox(win) {
@@ -305,13 +311,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const puntosTiempo = Math.floor((minas*15 / segundosTranscurridos));
             const puntos = (puntosTablero+puntosMinas)*puntosTiempo;
 
+            //Nueva Puntuación maxima
+            const record = parseInt(localStorage.getItem('BMHighScore')) || 0;
+            console.log(record);
+            if(puntos > record){
+                const msgSpecial = document.createElement('h2');
+                msgSpecial.textContent = '¡Mejor Puntaje!';
+                box.appendChild(msgSpecial);
+
+                localStorage.setItem('BMHighScore', puntos);
+            }
+            
+            //Tablero de Puntos
             box.appendChild(scoreRow(`Tablero ${cols} x ${filas}:`, `${puntosTablero} pts`));
             box.appendChild(scoreRow(`Minas ${minas}:`, `${puntosMinas} pts`));
             box.appendChild(scoreRow(`Bonus por Tiempo:`, `x${puntosTiempo}`));
             box.appendChild(scoreRow(`Puntuación Final:`, `${puntos} pts`));
 
-            /*//siguiente Nivel
-            const btnNext = document.createElement('button');*/
         } else {
             box.classList.add('lose');
             h2.textContent = 'Lo siento, Perdiste';
