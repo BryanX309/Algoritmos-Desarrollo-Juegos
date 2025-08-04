@@ -2,7 +2,7 @@
     
     padding: 2.5px;
     margin: 0px;
-    display: none;
+    display: grid;
     flex-direction: column;
     gap: 0px;
     width: 90vw;
@@ -69,13 +69,15 @@
 }
 
 .tecla{
-    background-color: rgba(59, 59, 59, 0.082);
+    
     width: 10%;
     height: 100%;
     color: aliceblue;
+    border: 2px solid rgba(255,255,255, 0.2);
+    background-color: rgba(59, 59, 59, 0.082);
     margin: 0px 2.5px;
     border-radius: 10px;
-    border: 2px solid rgba(255,255,255, 0.2);
+    
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     font-size: large;
 }
@@ -96,7 +98,7 @@
     padding: 0px;
     gap: 10px;
     background-color: rgba(4, 4, 102, 0);
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3); */
     height: 3.5rem;
     display: flex;
     flex-direction: row;
@@ -114,8 +116,8 @@
 
 .divider{
     height: 1px;
-    /* background-color: rgba(255, 255, 255, 0.2); */
-    margin: 0 10px ;
+    background-color: rgba(255, 255, 255, 0.2);
+    /* margin: 0 10px ; */
 }
 
 .teclado-fila{
@@ -132,6 +134,8 @@
     align-items: center;
     justify-content: center;
     margin: 0 10px;
+    min-width: 40%;
+    min-height: 40%;
 }
 
 
@@ -140,10 +144,11 @@
     padding: 10px;
     background-color: rgba(59, 59, 59, 0.082);
     color: aliceblue;
-    margin: 10px 0px;
-    border-radius: 10px;
     border: 2px solid rgba(255,255,255, 0.2);
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    margin: 10px 0px;
+    border-radius: 10px;
+    
     font-size: large;
 }
 .dificultad-inicial:hover{
@@ -168,7 +173,7 @@
 .dificultad{
     min-width: 3rem;
     flex-direction: row;
-    display: none;
+    display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -192,14 +197,6 @@
 
 }
 
-#dif-disabled{
-    display: flex;
-    background-color: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.479);
-    color: rgb(255, 255, 255);
-    filter: brightness(0.5);
-}
-
 #option-dificultad{
     background-color: rgba(59, 59, 59, 0.082);
     color: aliceblue;
@@ -208,4 +205,157 @@
     border: 2px solid rgba(255,255,255, 0.2);
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     font-size: large;
+}
+
+.popup {
+    /* display: none; */
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.225);
+    justify-content: center;
+    align-items: center;
+}
+
+.win {
+    border-radius: 20px;
+    backdrop-filter: brightness(20%) blur(5px);
+}
+.lose {
+    border-radius: 20px;
+    backdrop-filter: brightness(20%) blur(5px);
+}
+.normal {
+    display: flex;
+    color: aliceblue;
+    border: 3px solid rgba(255,255,255, 0.2);
+    background-color: rgba(32, 34, 46, 0.579);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+
+    text-align: center;
+    border-radius: 20px;
+    backdrop-filter: grayscale(100%) brightness(80%) blur(10px);
+}
+
+
+#dificulty-container{
+    display: flex;
+}
+
+.popup-button-row{
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0%;
+    height: 3rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.popup-button-row button{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    margin: 4px;
+    padding: 6px;
+    gap: 3px;
+    min-width: 3rem;
+}
+
+
+.win button:hover img{
+    filter: brightness(0) saturate(100%) invert(17%) sepia(86%) saturate(6093%) hue-rotate(144deg) brightness(97%) contrast(96%);
+}
+
+.lose button:hover img{
+    filter: brightness(0) saturate(100%) invert(6%) sepia(87%) saturate(5908%) hue-rotate(358deg) brightness(108%) contrast(99%);
+}
+
+.normal button:hover img{
+    filter: brightness(0) saturate(100%) invert(63%) sepia(58%) saturate(4201%) hue-rotate(216deg) brightness(96%) contrast(91%);
+}
+
+#dif-close{
+    display: flex;
+    background-color: rgba(59, 59, 59, 0.082);
+    color: aliceblue;
+    border: 2px solid rgba(255,255,255, 0.2);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+#dif-close:hover{
+    background-color: rgba(63, 54, 108, 0.36);
+    color: rgb(142, 124, 234);
+    border: 2px solid rgb(154, 137, 240);
+    box-shadow: 0px 6px 13px rgba(0, 0, 0, 0.38);
+}
+
+#registro-box{
+    align-self: center;
+    justify-self: center;
+    gap: 0px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(4, 4, 102, 0.062);
+    border-radius: 15px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255, 0.2);
+    width: 90vw;
+}
+
+#registro-container{
+    display: none;
+    padding: 6px;
+}
+
+#registro-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#registro-row p{
+    /* background-color: black; */
+    width: 15vw;
+    font-size: 13px;
+    line-height: 1;
+}
+
+#registro-row h4{
+    /* background-color: black; */
+    width: 15vw;
+    font-size: 14px;
+    line-height: 1;
+}
+
+#win-p{
+    display: flex;
+    flex-direction: column;
+}
+
+#popup-p-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+}
+#popup-p-container p{
+    gap: 0;
+    margin: 10px;
+    padding: 0;
+    
+}
+#popup-p-container h4{
+    gap: 0;
+    margin: 10px;
+    padding: 0;
 }

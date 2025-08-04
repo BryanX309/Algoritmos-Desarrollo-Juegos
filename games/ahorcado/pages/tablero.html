@@ -17,27 +17,36 @@
 
     <section class="main-page">
         <div class="game-grid">
-            <img src="../assets/fase-0.png" alt="" id="ahorcado-img">
-            
+            <img src="../assets/ahorcado-fases/fase-0.png" alt="" id="ahorcado-img">
+            <div id="win-lose-text"></div>
             
         </div>
         <div class="teclado-background">
 
             <div class="palabra">
-                <button id="dif-disabled" class="dificultad" disabled="true"><img src="../assets/add.svg" alt=""><h4>Nueva Partida</h4></button>
-                <button id="dif-new" class="dificultad"><img src="../assets/add.svg" alt=""></button>
-                <button id="dif-close" class="dificultad"><img src="../assets/arrow_back.svg" alt=""></button>                
-                <h2 id="palabra"></h2>
-                <span class="material-symbols-outlined config" id="config" title="Configuration">
-                        settings
-                </span>
+                <div style="display: flex;flex-direction: row;align-items: center;gap: 5px;">
+                    <button id="dif-new" class="dificultad" title="Nueva Partida">
+                        <img src="../assets/icons/add.svg" alt=""></img>
+                    </button>
+                    <img src="../assets/icons/timer.svg" alt="" style="width: 18px;height: 18px;"></img>
+                    <div id="hms">00:00</div>
+                </div>
+                
+                                
+                <h2 id="palabra">Nueva Partida</h2>
+                
+                <div style="display: flex;flex-direction: row;align-items: center;gap: 5px;align-content: center;">
+                    <div id="vidas">vidas: 6</div>
+                    <img src="../assets/icons/heart.svg" alt="" style="width: 18px;margin: 0;height: 18px;"></img>
+                    <button id="mute" class="dificultad" title="Silenciar">
+                        <img src="" alt=""></img>
+                    </button>
+                </div>
+                
+
             </div>
             <div class="divider"></div>
-            <div id="dif-in-container">
-                    <button class="dificultad-inicial" id="Facil">Facil</button>
-                    <button class="dificultad-inicial" id="Medio">Medio</button>
-                    <button class="dificultad-inicial" id="Dificil">Dificil</button>
-            </div>
+            
             <div id="teclado">
 
                 
@@ -50,8 +59,71 @@
 
             </div> 
         </div>
-        
+
+        <div id="registro-box">
+            <div style="display: flex;flex-direction: row;">
+                <button class="dificultad" style="padding: 0%;display: flex;width: 100%;" id="registro" title="Expandir/Contraer Registro">
+                    <h3>Registro</h3>
+                    <img src="../assets/icons/keyboard_arrow_down.svg" alt=""></img>
+                </button>
+                <button class="dificultad" style="padding: 0%;display: flex;margin: 5px 5px 0 0;" id="borrar-registro" title="Vaciar Registro">
+                    <img src="../assets/icons/delete_forever.svg" alt=""></img>
+                </button>
+            </div>
+            
+            <div id="registro-container"></div>
+        </div>
     </section> 
+    <div id="lose-container" class="popup">
+        <div class="msjBox-display lose" id="lose">
+            <h2>Lo siento, Perdiste</h2>
+            <div id="lose-p">This popup is controlled with JavaScript.</div>
+            <div class="popup-button-row">
+                <button id="lose-close" title="Regresar">
+                    <img src="../assets/icons/arrow_back.svg" alt="">
+
+                </button>
+                <button id="nueva-lose" title="Nueva Partida">
+                    <img src="../assets/icons/add.svg" alt="">
+                    <h4>Partida Nueva</h4>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="win-container" class="popup">
+        <div class="msjBox-display win">
+            <h2>Felicidades, Has Ganado</h2>
+            <div id="win-p">This popup is controlled with JavaScript.</div>
+            <div class="popup-button-row">
+                <button id="win-close" title="Regresar">
+                    <img src="../assets/icons/arrow_back.svg" alt="">
+                </button>
+                
+                <button id="nueva-win" title="Nueva Partida">
+                    <img src="../assets/icons/add.svg" alt="">
+                    <h4>Partida Nueva</h4>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+    <div id="dificulty-container" class="popup">
+        <div id="dif-in-container" class="normal">
+            <h2>Dificultad</h2>
+            <button class="dificultad-inicial" id="Facil">Facil</button>
+            <button class="dificultad-inicial" id="Medio">Medio</button>
+            <button class="dificultad-inicial" id="Dificil">Dificil</button>
+            <button id="dif-close" class="dificultad" title="Regresar"><img src="../assets/icons/arrow_back.svg" alt=""></button>
+        </div>
+    </div>
+    
+    
+    <audio id="acerto" src="../assets/sounds/game-start-317318 (mp3cut.net).mp3"></audio>
+    <audio id="fallo" src="../assets/sounds/mixkit-explainer-video-game-alert-sweep-236.wav"></audio>
+    <audio id="gano" src="../assets/sounds/game-start-6104.mp3"></audio>
+    <audio id="perdio" src="../assets/sounds/game-over-arcade-6435.mp3"></audio>
+
+        
     <script src="../js/ahorcado.js"></script>
 </body>
 </html>
