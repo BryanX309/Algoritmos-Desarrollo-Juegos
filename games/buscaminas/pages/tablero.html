@@ -24,22 +24,27 @@
         <div class="card">
             <h2>Cuidado donde pisas</h2>
             <div class="game-header">
-                <div>
-                    <span class="config" id="config" title="Configuration">
-                        <i class="material-icons">settings</i>
+                <div class="flex left">
+                    <span id="config" title="Configuration">
+                        <!--<i class="material-icons">settings</i>-->
+                        <img class="icon" src="../img/config-icon.svg" alt="">
                     </span>
-
-                    <span class="config" id="sonido" title="Sonido: Habilitado">
-                        <i class="material-icons">volume_up</i>
+                    
+                    <span id="sonido" title="Sonido: Habilitado">
+                        <img class="icon" src="../img/volume-on-icon.svg" alt="">
+                    </span>
+                    
+                    <span id="registro" title="Registro de Partidas">
+                        <img class="icon" src="../img/stats-icon.svg" alt="">
                     </span>
                 </div>
 
-                <div class="flex">
+                <div class="flex center">
                     <img src="../src/img/red_flag_icon.png" alt="">
                     <h2 id="nMinas"></h2>
                 </div>
 
-                <div class="flex">
+                <div class="flex right">
                     <img src="../src/img/clock_icon.png" alt="">
                     <h2 id='cronometro'>00:00</h2>
                 </div>

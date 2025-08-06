@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.querySelector('body');
 
     const tablero = document.querySelector('.tablero');
-    const timer = document.querySelector('#timer');
     let win = null; //aquí se guarda si el juego se ganó
     let delay = 0, bodyClick = false;
 
@@ -17,28 +16,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const minas = parseInt(localStorage.getItem('minas')) || 8;
 
     let sonido = JSON.parse(localStorage.getItem('sonido'));
-    
+
     sonido = sonido !== null ? sonido : true // define como true el valor por defecto
     // se hace asi porque || funciona como operador O y si en localStorage es falso queda (falso o verdadero) = verdadero
 
     const btnSonido = document.querySelector('#sonido');
+    const btnRegistro =  document.querySelector('#registro');
+
     btnSonido.value = sonido;
     cargarBtnSonido(sonido)
 
-    body.addEventListener('click', ()=>{
-        if(win !== null){
-            if(bodyClick){
+    body.addEventListener('click', () => {
+        if (win !== null) {
+            if (bodyClick) {
                 mensajeBox(win);
-            }else{
+            } else {
                 bodyClick = true; //el mensaje aparecerá solo si es el segundo click en el body
             }
         }
     })
 
-    function cargarBtnSonido(booleano){
+    function cargarBtnSonido(booleano) {
         const icon = btnSonido.children[0];
-
-        icon.innerHTML = booleano ? 'volume_up' : 'volume_off';
+        icon.src = `../img/volume-${booleano?'on':'off'}-icon.svg`;
+        icon.title = booleano ? 'Sonido: Habilitado' : 'Sonido: Deshabilitado';
     }
 
     btnConfig.addEventListener('click', (e) => {
@@ -46,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.stopPropagation();
         window.location.href = "./config.html";
     });
-    
-    btnSonido.addEventListener('click', (e)=>{
+
+    btnSonido.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         sonido = !sonido;
@@ -56,7 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cargarBtnSonido(sonido);
     })
-    
+
+    btnRegistro.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = "./registro.html";
+    });
+
     genTablero();
 
     function genTablero() {
@@ -212,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cell = document.getElementById(celda);
                 setTimeout(() => {
                     cell.innerHTML = '';
-                    if(sonido){
+                    if (sonido) {
                         const audio = new Audio('../src/sonidos/explosion.mp3');
                         audio.play();
                     }
@@ -262,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function mensajeBox(win) {
-        if(document.querySelector('.msjBox-container') !== null){
+        if (document.querySelector('.msjBox-container') !== null) {
             return;
         }
 
@@ -281,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         box.appendChild(h2);
         if (win) {
-            function scoreRow(scoreLabel, puntos){
+            function scoreRow(scoreLabel, puntos) {
                 const div = document.createElement('div');
                 const label = document.createElement('h3');
                 const score = document.createElement('h3');
@@ -302,19 +309,37 @@ document.addEventListener('DOMContentLoaded', () => {
             //pontajes
             const puntosTablero = cols * filas * 10;
             const puntosMinas = minas * 100;
-            const puntosTiempo = 1 + Math.floor((minas*15 / segundosTranscurridos));
-            const puntos = (puntosTablero+puntosMinas)*puntosTiempo;
+            const puntosTiempo = 1 + Math.floor((minas * 15 / segundosTranscurridos));
+            const puntos = (puntosTablero + puntosMinas) * puntosTiempo;
+
+            //agregar victoria al Registro
+            let registro = JSON.parse(localStorage.getItem('BM-registro')) || [];
+            const partida = {
+                tablero: `${cols} x ${filas}`,
+                minas: minas,
+                tiempo: document.querySelector('#cronometro').textContent,
+                score: puntos
+            }
+
+            registro = [...registro, partida];
+
+            console.log(registro);
+            
+
+            registro.sort((a,b) => b.score- a.score);
+
+            localStorage.setItem('BM-registro', JSON.stringify(registro));
 
             //Nueva Puntuación maxima
             const record = parseInt(localStorage.getItem('BMHighScore')) || 0;
-            if(puntos > record){
+            if (puntos > record) {
                 const msgSpecial = document.createElement('h2');
                 msgSpecial.textContent = '¡Mejor Puntaje!';
                 box.appendChild(msgSpecial);
 
                 localStorage.setItem('BMHighScore', puntos);
             }
-            
+
             //Tablero de Puntos
             box.appendChild(scoreRow(`Tablero ${cols} x ${filas}:`, `${puntosTablero} pts`));
             box.appendChild(scoreRow(`Minas ${minas}:`, `${puntosMinas} pts`));

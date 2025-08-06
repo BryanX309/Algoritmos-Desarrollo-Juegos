@@ -9,16 +9,19 @@
     min-width: 40%;
 }
 
-.config {
-    size: 50px;
+.icon {
     font-style: normal;
     color: white;
     cursor: pointer;
-    width: 50px;
+    padding: 1px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    margin: 0;
 }
 
-.config:hover {
-    color: rgb(90, 200, 80);
+.icon:hover {
+    border: 2px solid rgba(255,255,255,0.5);
+    background-color: rgba(90,200,80,0.3);
 }
 
 .game-header {
@@ -31,6 +34,22 @@
 .game-header img {
     height: 30px;
     width: 30px;
+}
+
+.game-header div{
+    min-width: 30%;
+}
+
+.left{
+    justify-content: left;
+}
+
+.center{
+    justify-content: center;
+}
+
+.right{
+    justify-content: right;
 }
 
 .flex {
@@ -212,7 +231,7 @@
 }
 
 .input-row button:hover {
-    background-color: rgb(20, 20, 80);
+    background-color: rgb(41, 41, 128);
     border: 1px solid rgba(0, 0, 0, 0.5);
     box-shadow: 0 3px 10px rgba(100, 100, 100, 0.2);
 }
@@ -273,4 +292,69 @@
     text-align: center;
     background-color: blue;
     max-height: 100px;
+}
+
+/*Clases Registro*/
+.registro-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.registro-head .icon{
+    width: 50px;
+    max-height: 50px;
+    color: white;
+    background-color: rgb(20, 20, 50);
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
+}
+
+.registro-head .icon:hover {
+    background-color: rgb(41, 41, 128);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 10px rgba(100, 100, 100, 0.2);
+}
+
+.registro-head .icon:active {
+    background-color: transparent;
+}
+
+
+
+.registro-table{
+    padding: 6px;
+    align-self: center;
+    justify-self: center;
+    gap: 0px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(4, 4, 102, 0.062);
+    border-radius: 15px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255, 0.2);
+    width: 90vw;
+    max-width: 500px;
+}
+
+.registro-table .headers{
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    height: 50px;
+}
+
+.registro-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.registro-row h4{
+    width: 20%;
+    min-width: 100px;
 }
