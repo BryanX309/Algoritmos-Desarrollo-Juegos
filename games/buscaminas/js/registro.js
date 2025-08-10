@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     addRow('TABLERO', 'MINAS', 'TIEMPO', 'PUNTAJE');
     container.children[0].classList.add('headers');
-
-    console.log(tabla);
     
     if(tabla !== null){
         tabla.forEach(r => {        
@@ -15,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }else{
         const h4 = document.createElement('h3');
         const row = document.createElement('div');
-
-        //row.classList.add('registro-row');
 
         h4.textContent = 'No Hay Partidas Registradas';
 

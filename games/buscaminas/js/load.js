@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const btnConfig = document.querySelector('#config');
+    const btnSonido = document.querySelector('#sonido');
+    const btnRegistro = document.querySelector('#registro');
+
     const body = document.querySelector('body');
 
     const tablero = document.querySelector('.tablero');
@@ -20,9 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sonido = sonido !== null ? sonido : true // define como true el valor por defecto
     // se hace asi porque || funciona como operador O y si en localStorage es falso queda (falso o verdadero) = verdadero
 
-    const btnSonido = document.querySelector('#sonido');
-    const btnRegistro =  document.querySelector('#registro');
-
     btnSonido.value = sonido;
     cargarBtnSonido(sonido)
 
@@ -37,9 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     function cargarBtnSonido(booleano) {
-        const icon = btnSonido.children[0];
-        icon.src = `../img/volume-${booleano?'on':'off'}-icon.svg`;
-        icon.title = booleano ? 'Sonido: Habilitado' : 'Sonido: Deshabilitado';
+        btnSonido.src = `../src/img/icons/volume-${booleano ? 'on' : 'off'}-icon.svg`;
+        btnSonido.title = booleano ? 'Sonido: Habilitado' : 'Sonido: Deshabilitado';
     }
 
     btnConfig.addEventListener('click', (e) => {
@@ -68,14 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function genTablero() {
 
-        const showMinas = document.querySelector("#nMinas");
+        const flagsCounter = document.querySelector("#flagCounter");
 
-        showMinas.textContent = minas;
+        flagsCounter.textContent = minas;
 
         const coordenadas = [];
 
         //define las coordenadas de cada mina
-        for (let i = 1; i <= minas; i++) {
+        for (let i = 0; i < minas; i++) {
             mina = `${Math.floor(Math.random() * cols) + 1}-${Math.floor(Math.random() * filas) + 1}`;
             if (!coordenadas.includes(mina)) {
                 coordenadas[i] = mina;
@@ -105,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     cell.classList.add('oscuro');
                 }
 
+                //Click Izquierdo / Revelar Celda
                 cell.addEventListener('click', (e) => {
                     if (e.target.classList.value.includes('sin-revelar') && win !== false) {
                         if (!juegoIniciado) {
@@ -124,7 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                         const id = `${x}-${y}`
                                         const celda = document.getElementById(id);
 
-                                        if (celda !== null && celda.value !== 'mina' && celda.value !== 'banner' && celda.classList.value.includes('sin-revelar')) {
+                                        if (celda !== null &&
+                                            celda.value !== 'mina') {
                                             celda.click();
                                         }
                                     }
@@ -142,41 +143,46 @@ document.addEventListener('DOMContentLoaded', () => {
                                 break;
                         }
 
-                        const celdasOcultas = [...document.querySelectorAll('.sin-revelar'), ...document.querySelectorAll('.banner')];
-                        const minasOcultas = [...celdasOcultas.filter(celda => celda.value === 'mina')];
+                        const celdasOcultas = [
+                            ...document.querySelectorAll('.sin-revelar'),
+                            ...document.querySelectorAll('.flag')
+                        ];
+
+                        const minasOcultas =
+                            [...celdasOcultas.filter(celda => celda.value === 'mina')];
                         //filtra las minas en las celdas ocultas o marcadas
 
-                        if (minasOcultas.length === celdasOcultas.length && win !== true) {
+                        if (minasOcultas.length === celdasOcultas.length && !win) {
                             win = true;
                             juegoTerminado();
                         }
                     }
                 })
 
-                //click izquierdo / Marcar Mina
+                //click Derecho / Marcar Celda
                 cell.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
 
                     celda = e.currentTarget;
-                    const bannerCounter = parseInt(showMinas.textContent);
+                    const fCount = parseInt(flagsCounter.textContent);
                     const clases = celda.classList.value;
 
-                    if (clases.includes('sin-revelar') || clases.includes('banner')) {
+                    if (clases.includes('sin-revelar') || clases.includes('flag')) {
 
                         if (clases.includes('sin-revelar')) {
                             celda.classList.remove('sin-revelar');
-                            celda.classList.add('banner');
-                            showMinas.textContent = `${bannerCounter - 1}${bannerCounter - 1 < 0 ? '?' : ''}`;
+                            celda.classList.add('flag');
+                            flagsCounter.textContent = `${fCount - 1}${fCount - 1 < 0 ? '?' : ''}`;
 
-                            banner = document.createElement('img');
-                            banner.src = "../src/img/red_flag_icon.png";
+                            const flag = document.createElement('img');
+                            flag.src = "../src/img/red_flag_icon.png";
 
-                            celda.appendChild(banner);
+                            celda.appendChild(flag);
                         } else {
                             celda.innerHTML = '';
-                            celda.classList.remove('banner');
+                            celda.classList.remove('flag');
                             celda.classList.add('sin-revelar');
-                            showMinas.textContent = `${bannerCounter + 1}${bannerCounter + 1 < 0 ? '?' : ''}`;
+                            flagsCounter.textContent = `${fCount + 1}${fCount + 1 < 0 ? '?' : ''}`;
                         }
                     }
                 })
@@ -210,12 +216,27 @@ document.addEventListener('DOMContentLoaded', () => {
         function explotaMina(celdaId) {
             win = false;
 
-            const booms = [celdaId, ...coordenadas.filter(id => id !== celdaId)]
+            const [colIni, filaIni] = celdaId.split("-").map(Number);
+
+            //se ordenan las minas conforme que tan cerca están de la mina inicial
+            coordenadas.sort((a, b) => {
+                const [colA, filaA] = a.split("-").map(Number);
+                const [colB, filaB] = b.split("-").map(Number);
+
+                // Calcular distancia de la celda inicial
+                const distA = Math.sqrt((colA - colIni) ** 2 + (filaA - filaIni) ** 2);
+                const distB = Math.sqrt((colB - colIni) ** 2 + (filaB - filaIni) ** 2);
+
+                return distA - distB;
+            });
+
             const maxDelay = 250, minDelay = 80;
             const maxMines = 172, minMines = 8;
-            const delayAdd = maxDelay - (maxDelay - minDelay) / (maxMines - minMines) * (minas - minMines);//para que todas las minas exploten en un tiempo máximo
+            const delayAdd =
+                maxDelay - (maxDelay - minDelay) / (maxMines - minMines) * (minas - minMines);
+            //para que todas las minas exploten en un tiempo máximo
 
-            booms.forEach(celda => {
+            coordenadas.forEach(celda => {
                 const cell = document.getElementById(celda);
                 setTimeout(() => {
                     cell.innerHTML = '';
@@ -248,34 +269,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function juegoTerminado() {
+        juegoIniciado = false;
         clearInterval(cronometroInterval);
+        setTimeout(() => mensajeBox(win), delay + 1000);
 
-        setTimeout(() => {
-            if (win) {
-                const celdas = [...document.querySelectorAll('.sin-revelar'), ...document.querySelectorAll('.banner')]
-                celdas.forEach(celda => {
-                    if (celda.value === 'mina') {
-                        celda.innerHTML = '';
-                        celda.classList.add('banner');
-                        const img = document.createElement('img');
-                        img.src = '../src/img/bomb-icon.png';
-                        celda.appendChild(img);
-                    }
-                });
-
-            }
-            mensajeBox(win);
-        }, delay + (win ? 200 : 1000));
+        if (win) {
+            const celdas = [...document.querySelectorAll('.sin-revelar'), ...document.querySelectorAll('.flag')]
+            celdas.forEach(celda => {
+                if (celda.value === 'mina') {
+                    celda.innerHTML = '';
+                    celda.classList.add('flag');
+                    const img = document.createElement('img');
+                    img.src = '../src/img/bomb-icon.png';
+                    celda.appendChild(img);
+                }
+            });
+        }
     }
 
     function mensajeBox(win) {
+        sonido = false;
         if (document.querySelector('.msjBox-container') !== null) {
             return;
         }
 
         const container = document.createElement('div');
         const box = document.createElement('div');
-        const h2 = document.createElement('h2');
+        const header = document.createElement('h2');
         const btnRetry = document.createElement('button');
         const div = document.createElement('div');
 
@@ -286,7 +306,8 @@ document.addEventListener('DOMContentLoaded', () => {
             location.reload();
         })
 
-        box.appendChild(h2);
+        box.appendChild(header);
+        //contenido de mensajeBox dependiendo de win
         if (win) {
             function scoreRow(scoreLabel, puntos) {
                 const div = document.createElement('div');
@@ -304,9 +325,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             box.classList.add('win');
-            h2.textContent = 'Felicidades, Has Ganado';
+            header.textContent = 'Felicidades, Has Ganado';
 
-            //pontajes
+            //puntajes
             const puntosTablero = cols * filas * 10;
             const puntosMinas = minas * 100;
             const puntosTiempo = 1 + Math.floor((minas * 15 / segundosTranscurridos));
@@ -324,9 +345,9 @@ document.addEventListener('DOMContentLoaded', () => {
             registro = [...registro, partida];
 
             console.log(registro);
-            
 
-            registro.sort((a,b) => b.score- a.score);
+
+            registro.sort((a, b) => b.score - a.score);
 
             localStorage.setItem('BM-registro', JSON.stringify(registro));
 
@@ -348,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } else {
             box.classList.add('lose');
-            h2.textContent = 'Lo siento, Perdiste';
+            header.textContent = 'Lo siento, Perdiste';
         }
 
         body.appendChild(container);
@@ -359,13 +380,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function ajustarTextoCeldas() {
         const celdas = document.querySelectorAll('.cerca');
-
         celdas.forEach((celda) => {
-            const referencia = document.querySelector('.sin-revelar') !== null ? document.querySelector('.sin-revelar') : document.querySelector('.empty')
-            const size = referencia.offsetHeight
+            const ref =
+                document.querySelector('.sin-revelar') ||
+                document.querySelector('.flag') ||
+                document.querySelector('.empty');
+            //se consigue cualquier celda que no sea numérica para tomarla de referencia
+            const size = ref.offsetHeight
 
             celda.style.fontSize = size * 0.45 + 'px';
         })
     }
+
+    //funciones de la pantalla
     window.addEventListener('resize', () => ajustarTextoCeldas());
+    window.addEventListener("beforeunload", function (e) {
+        if (juegoIniciado && win === null) {
+            e.preventDefault();
+            e.returnValue = ""; // Requerido en la mayoría de navegadores
+        }
+    });
 })

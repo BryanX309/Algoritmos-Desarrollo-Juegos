@@ -83,7 +83,6 @@
     border-left: 2px solid rgba(255, 255, 255, 0.5);
     border-bottom: 2px solid rgba(0, 0, 0, 0.5);
     border-right: 2px solid rgba(0, 0, 0, 0.5);
-    font-size: 2px;
 }
 
 .tablero .celda .valor {
@@ -91,22 +90,21 @@
 }
 
 .tablero .celda:hover {
-
     border: 2px solid blue;
 }
 
 /*Diseño de celdas sin revelar o marcadas*/
 .sin-revelar.claro,
-.banner.claro {
+.flag.claro {
     background-color: rgb(150, 200, 240);
 }
 
 .sin-revelar.oscuro,
-.banner.oscuro {
+.flag.oscuro {
     background-color: rgb(120, 180, 230);
 }
 
-.banner img {
+.flag img {
     width: 100%;
 }
 
@@ -123,6 +121,11 @@
 
 .cerca {
     font-size: 25px;
+    /*font-size: 45%;
+    font-size: 2vw;
+    font-size: 2rem;
+    font-size: 2em;
+    font-size: 1cap;*/
 }
 
 .cerca.v1 {

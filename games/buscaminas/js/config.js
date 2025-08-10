@@ -12,14 +12,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     cargar();
 
+    //función restrictiva de inputs
     inputs.forEach((input)=>{
         input.addEventListener('keypress',(e)=>{
-            if(e.key === '.' ||e.key === ','){
+            const chars = ['1','2','3','4','5','6','7','8','9'];            
+            if(!chars.includes(e.key)){
                 e.preventDefault();
             }
         });
-
-        input.addEventListener('input',(e)=>e.preventDefault());
     })
 
     function cargar(){
@@ -35,14 +35,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
             showAlert('El Campo de Columnas no puede estar vació');
             return false;
         }
+        
+        if(!Number.isInteger(parseFloat(cols.value))){
+            showAlert('EL valor de las columnas tiene que ser un entero');
+            return false;
+        }
 
         if(cols.value < minCeldas || cols.value > maxCeldas){
             showAlert(`Las Columnas tienen que ser de ${minCeldas} a ${maxCeldas}`);
             return false;
-        
         }
+
         if(filas.value === ''){
             showAlert('El Campo de Filas no puede estar vació');
+            return false;
+        }
+
+        if(!Number.isInteger(parseFloat(filas.value))){
+            showAlert('EL valor de las filas tiene que ser un entero');
             return false;
         }
 
@@ -51,29 +61,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
             return false;
         }
 
-        if(minas.value < celdas*0.1){
-            showAlert(`Las minas que quieres usar son menores al 10% de las ${cols.value * filas.value} celdas con las que quieres jugar`);
+        if(!Number.isInteger(parseFloat(minas.value))){
+            showAlert('EL valor de las minas tiene que ser un entero');
             return false;
         }
 
-        if(minas.value > celdas*0.3){
-            showAlert(`Las minas que quieres usar son mayores al 30% de las ${cols.value * filas.value} celdas con las que quieres jugar`);
+        const minMinas = Math.ceil(celdas*0.1);
+        const maxMinas = Math.floor(celdas*0.3);
+
+        if(minas.value < minMinas || minas.value > maxMinas){
+            showAlert(`Actualmente el tablero tendría ${celdas} celdas, 
+            por lo que solo puede usar entre ${minMinas} y ${maxMinas} minas.`);
             return false;
         }
-
         return true;
     }
 
     function showAlert(msg = 'Texto de Alerta'){
-        /*
-        <div class="flex">
-            <div class="alerta">
-                <div class="alert-header"><button>x</button></div>
-                <p>Alerta</p>
-            </div>
-        </div>
-        */
-
         card.lastChild.remove();
         
         const flex = document.createElement('div');
@@ -105,7 +109,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     btnGuardar.addEventListener('click',()=>{
         if(validar()){
-            localStorage.setItem('columnas', cols.value);
+            localStorage.setItem('columnas',cols.value);
             localStorage.setItem('filas',filas.value);
             localStorage.setItem('minas',minas.value);
 
