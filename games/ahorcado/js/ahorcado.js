@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
         
         // Actualiza mensaje principal
-        // winLoseMessage.innerText = `Perdiste, palabra: ${palabraSeleccionada}`;
+        winLoseMessage.innerText = `Perdiste, palabra: ${palabraSeleccionada}`;
         winLoseMessage.style.color = 'rgb(234, 124, 124)';
         winLoseMessage.style.paddingTop = '5px';
         
